@@ -16,6 +16,8 @@ jobs:
             -fobjc-arc \
             -framework Foundation \
             -framework UIKit \
+            -framework QuartzCore \
+            -framework CoreGraphics \
             -o Tweak.dylib Tweak.mm
           codesign -f -s - Tweak.dylib
 
