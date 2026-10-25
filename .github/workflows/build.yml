@@ -1,0 +1,25 @@
+name: Build Tweak.dylib
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          xcrun -sdk iphoneos clang++ \
+            -arch arm64 \
+            -miphoneos-version-min=14.0 \
+            -dynamiclib \
+            -fobjc-arc \
+            -framework Foundation \
+            -framework UIKit \
+            -o Tweak.dylib Tweak.mm
+          codesign -f -s - Tweak.dylib
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Tweak
+          path: Tweak.dylib
